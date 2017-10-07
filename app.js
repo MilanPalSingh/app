@@ -10,8 +10,8 @@ var botID;
 
 // create a bot
 var bot = new SlackBot({
-    token: 'xoxb-253004458082-sMRD3k81i42smTXCQ5uWNin7',
-    name: 'calhack'
+    token: 'xoxb-252387996912-lr4RmhvmUqb9JHkf9A7f83t9',
+    name: 'calhack1'
 });
 
 /**
@@ -22,8 +22,7 @@ bot.on('message', function(data) {
     if(data.text && !data.bot_id){
         console.log(data.user, " : ", botID);
         console.log(data.text);
-        var promise = new Promise(appI.call, data.text);
-        promise.then(function(r){
+        appI.call(data.text).then(function(r){
             console.log("resolved");
             var speech = r.result.fulfillment.speech;
             console.log(speech);
@@ -45,13 +44,14 @@ function respond(req, res, next) {
 function getinfo(req,res,next){
     // console.log("getinfo");
     // console.log(req.params.text);
-    var promise = new Promise(appI.call);
-    promise.then(function(r){
-        console.log(r);
-        res.send(r);
-        next();
-    });
+    // var promise = new Promise(appI.call);
+    // promise.then(function(r){
+    //     console.log(r);
+    //     res.send(r);
+    //     next();
+    // });
 }
+
 
 var server = restify.createServer();
 server.get('/hello/:name', respond);
@@ -60,8 +60,8 @@ server.get('/getinfo/:text', getinfo);
 
 server.listen(8081, function() {
   console.log('%s listening at %s', server.name, server.url);
-    bot.getUserId("calhack").then(function(r){
-        console.log("bot userID ",r);
-        botID = r;
-    });
+    // bot.getUserId("calhack").then(function(r){
+    //     console.log("bot userID ",r);
+    //     botID = r;
+    // });
 });

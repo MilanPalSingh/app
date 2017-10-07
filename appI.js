@@ -2,21 +2,24 @@ var apiai = require('apiai');
 
 var app = apiai("30ce048ffe724964856e428d367ea748");
 
-module.exports.call =  function(resolve, reject, text){
-    console.log("call : ", text);
-    var request = app.textRequest(text, {
-        sessionId: '1'
-    });
+module.exports.call = function(text){
 
-    request.on('response', function(response) {
-        console.log(response.result.action);
-        resolve(response);
-    });
+    return new Promise(function(resolve, reject){
+        console.log("call : ", text);
+        var request = app.textRequest(text, {
+            sessionId: '1'
+        });
 
-    request.on('error', function(error) {
-        console.log(error);
-        reject(error);
-    });
+        request.on('response', function(response) {
+            console.log(response.result.action);
+            resolve(response);
+        });
 
-    request.end();
+        request.on('error', function(error) {
+            console.log(error);
+            reject(error);
+        });
+
+        request.end();
+    });
 }
