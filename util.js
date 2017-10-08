@@ -31,16 +31,19 @@ module.exports = {
 	},
 	assinTask: function(users, task){
         return new Promise(function(resolve, reject){
+        	console.log("assin to obj ", users,task.length);
         if(task.length>0){	
         	task.forEach(function(t){
-        		if(t.dependency.length=0){
+        		// if(t.dependency.length!=0){
+        			console.log("no dependency");
         			users.some(function(u){
-        				if(u.task.length==0){
+        				if(u.tasks.length==0){
+        					console.log(t);
         					u.tasks.push(t);
         					return true;
         				}
         			});
-        		}
+        		// }
         	});
         	resolve([users, task]);
         }else{

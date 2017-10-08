@@ -39,12 +39,33 @@ module.exports = {
 			u.tasks.some(function(t){
 				if(t.status==0){
 					var text ="@"+u.name +" can you pick up "+t.title;
-					bot.postMessage(channel, text,{ parse:"full" });
+					botO.postMessage(channel, text,{ parse:"full" });
 				}
 			});
 		});
 
+	},
+	ifTaskAccptance: function(data){
+		if(data.result.metadata.intentName=="Task Acceptance")
+			return true;
+		else 
+			return false;
+	},
+	ifTaskRejection: function(data){
+		if(data.result.metadata.intentName=="Task Rejection")
+			return true;
+		else
+			return false;
+	},
+	
+	ifTaskcomplete: function(data){
+		if(data.result.metadata.intentName=="Task_complete")
+			return true;
+		else 
+			return false;
+		
 	}
+
 
 }
 

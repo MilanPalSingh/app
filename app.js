@@ -29,18 +29,67 @@ bot.on('message', function(data) {
                     // console.log("assine task ",r.result.parameters);
                     fireb.getTasks(r.result.parameters.food).then(function(r){
                         gTask = r;
-                    });
-                    utill.assinTask(gUsers, gTask).then(function(res){
-                        gUsers = res[0];
-                        gTask = res[1];
-                        console.log(gUsers);
-                        // push message to channel using bot from gUser obj
-                        bot.assinTask(gUsers, data.channel);
+                        
+                        utill.assinTask(gUsers, gTask).then(function(res){
+                            gUsers = res[0];
+                            gTask = res[1];
+                            // console.log(gUsers);
+                            // push message to channel using bot from gUser obj
+                            botutil.assinTask(gUsers, data.channel);
+                        });
                     });
                 }else{
                     bot.postMessage(data.channel, r.result.fulfillment.speech);             
                 }
             }else if(botutil.ifTaskAccptance(r)){
+                console.log("acceptance",data.user);
+                gUsers.forEach(function(u){
+                    if(u.user==data.user){
+                        u.tasks.forEach(function(t){
+                            if(t.status==0){
+                                t.status=1;
+                            }
+                        });
+                    }
+                });
+                // utill.assinTask(gUsers, gTask).then(function(res){
+                //             gUsers = res[0];
+                //             gTask = res[1];
+                //             // console.log(gUsers);
+                //             // push message to channel using bot from gUser obj
+                //             botutil.assinTask(gUsers, data.channel);
+                //         });
+
+            }else if(botutil.ifTaskRejection(r)){
+                gUsers.forEach(function(u){
+                    if(u.user==data.user){
+                        u.tasks.forEach(function(t){
+                            if(t.status==0){
+                                t.status=-1;
+                            }
+                        });
+                    }
+                });
+                // utill.assinTask(gUsers, gTask).then(function(res){
+                //             gUsers = res[0];
+                //             gTask = res[1];
+                //             // console.log(gUsers);
+                //             // push message to channel using bot from gUser obj
+                //             botutil.assinTask(gUsers, data.channel);
+                //         });
+            }else if(botutil.ifTaskcomplete(r)){
+                gUsers.forEach(function(u){
+                    if(u.user==data.user){
+                        u.tasks.forEach(function(t){
+                            if(t.status==1){
+                                t.status=2;
+                                bot.postMessage(data.channel, "@"+u.name+r.result.fulfillment.speech,{ parse:"full" });
+                            }
+                        });
+                    }
+                });
+
+
 
             }else{
                 var speech = r.result.fulfillment.speech;
