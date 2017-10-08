@@ -47,7 +47,7 @@ bot.on('message', function(data) {
                         u.tasks.forEach(function(t){
                             if(t.status==0){
                                 t.status=1;
-                                bot.postMessage(data.channel, "@"+u.name+" u are assigned tast "+t.title,{ parse:"full" });
+                                bot.postMessage(data.channel, "@"+u.name+" you are assigned task "+t.title,{ parse:"full" });
                                 console.log(t.id, u.id);
                                 fireb.newTaskAssigned(u,t).then(function(){
                                     console.log("task update done.");

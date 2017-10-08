@@ -38,7 +38,7 @@ module.exports = {
 		users.forEach(function(u){
 			u.tasks.some(function(t){
 				if(t.status==0){
-					var text ="@"+u.name +" can you pick up "+t.title;
+					var text ="@"+u.name +" can you take up this task: "+t.title;
 					botO.postMessage(channel, text,{ parse:"full" });
 				}
 			});

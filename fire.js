@@ -26,7 +26,7 @@ module.exports = {
 			// 	console.log("taskKey");
 			
 				// t.forEach(function(te){console.log(te);});
-			if(snapshot.val().incident_name=="Burger"){
+			if(snapshot.val().incident_name=="burger" || snapshot.val().incident_name=="Burger"){
 				var temp = new Task(t.task_title, t.task_id,t.task_description, t.task_eta, 0, t.task_dependency, uuidv4() );
 				// console.log(temp);
 				task.push( temp);
@@ -109,7 +109,7 @@ module.exports = {
 		// 	console.log(t.task_id);
 		// })
 
-			console.log("updateing   .. ",t.uuid);
+			console.log("updating   .. ",t.uuid);
 			var tuRef = fireO.database().ref('progress/'+t.uuid).set({
 				progress_id: t.uuid,
 				task_id: t.id,
@@ -140,7 +140,8 @@ module.exports = {
 			incident_name : td.food,
 			task_description : td.task_description,
 			task_eta: td.time,
-			task_title: td.task_title 
+			task_title: td.task_title,
+			parent: '-KvweZSNWOiwMIbts7lD'  
 		}
 
 
