@@ -42,12 +42,16 @@ bot.on('message', function(data) {
                     bot.postMessage(data.channel, r.result.fulfillment.speech);             
                 }
             }else if(botutil.ifTaskAccptance(r)){
-                console.log("acceptance",data.user);
                 gUsers.forEach(function(u){
-                    if(u.user==data.user){
+                    if(u.id==data.user){
                         u.tasks.forEach(function(t){
                             if(t.status==0){
                                 t.status=1;
+                                bot.postMessage(data.channel, "@"+u.name+" u are assigned tast "+t.title,{ parse:"full" });
+                                console.log(t.id, u.id);
+                                fireb.newTaskAssigned(u,t).then(function(){
+                                    console.log("task update done.");
+                                });
                             }
                         });
                     }
@@ -62,7 +66,7 @@ bot.on('message', function(data) {
 
             }else if(botutil.ifTaskRejection(r)){
                 gUsers.forEach(function(u){
-                    if(u.user==data.user){
+                    if(u.id==data.user){
                         u.tasks.forEach(function(t){
                             if(t.status==0){
                                 t.status=-1;
@@ -78,18 +82,26 @@ bot.on('message', function(data) {
                 //             botutil.assinTask(gUsers, data.channel);
                 //         });
             }else if(botutil.ifTaskcomplete(r)){
+                console.log("compleate",data.user);
+
                 gUsers.forEach(function(u){
-                    if(u.user==data.user){
+                    if(u.id==data.user){
                         u.tasks.forEach(function(t){
                             if(t.status==1){
                                 t.status=2;
                                 bot.postMessage(data.channel, "@"+u.name+r.result.fulfillment.speech,{ parse:"full" });
+                                fireb.updateTaskAssigned(u,t).then(function(){
+                                    console.log(" status update done.");
+                                });
                             }
                         });
                     }
                 });
 
 
+            }else if(r.result.metadata.intentName=="Create_task"){
+
+                fireb.creatTask(r);
 
             }else{
                 var speech = r.result.fulfillment.speech;
