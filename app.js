@@ -9,6 +9,7 @@ var apiai = require('./appI');
 var botutil = require('./slackbot');
 var config = require('./config');
 var fireb = require('./fire');
+var utill = require('./util');
 
 // create a bot
 // var bot = new SlackBot({
@@ -60,7 +61,9 @@ server.head('/hello/:name', respond);
 server.listen(8081, function() {
 
   console.log('%s listening at %s', server.name, server.url);
-  // botutil.getAllUsers();
+  bot.getUsers().then(function(r){
+    utill.creatUserArray( r);
+  });
   // console.log(fireb.getTasks());
     // bot.getUserId("calhack").then(function(r){
     //     console.log("bot userID ",r);

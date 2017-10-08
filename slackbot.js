@@ -22,9 +22,10 @@ module.exports = {
 	isMessageFromUser: function(data){
 		return data.text && !data.bot_id
 	},
-	getAllUsers: function(data){
+	getAllUsers: function(){
 		botO.getUsers().then(function(r){
-			console.log("all users: ",r);
+			// console.log("all users: ",r);
+			return r;
 		});
 	}	
 }
