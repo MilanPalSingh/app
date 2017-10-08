@@ -27,7 +27,25 @@ module.exports = {
 			// console.log("all users: ",r);
 			return r;
 		});
-	}	
+	},
+	ifIncident: function(data){
+		if(data.result.metadata.intentName=="Incident")
+			return true;
+		else
+			return false;
+	},
+	assinTask: function(users, channel){
+		users.forEach(function(u){
+			u.tasks.some(function(t){
+				if(t.status==0){
+					var text ="@"+u.name +" can you pick up "+t.title;
+					bot.postMessage(channel, text,{ parse:"full" });
+				}
+			});
+		});
+
+	}
+
 }
 
 

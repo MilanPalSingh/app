@@ -1,14 +1,14 @@
 
 
 module.exports = class task {
-  constructor() {
-    this._id = 0;
-    this._title ="";
-    this._description ="";
-    this._dependency=[];
-    this._eta=0;
+  constructor(title, id , des, eta, status, dependency) {
+    this._id = id || 0;
+    this._title =title || "";
+    this._description =des || "";
+    this._dependency= dependency || [];
+    this._eta=eta || 0;
     this._type="task";
-    this._status=0;
+    this._status=status || 0;
   }
   set id(id){
   	this._id=id;

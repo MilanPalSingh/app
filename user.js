@@ -1,13 +1,21 @@
 
 
 module.exports = class user {
-  constructor() {
-    this._id = 0;
-    this._name ="";
+  // constructor() {
+  //   this._id = 0;
+  //   this._name ="";
+  //   this._tasks=[];
+  //   this._level=0;
+  //   this._avalability=true;
+  // }
+  constructor(id,name,level) {
+    this._id = id || 0;
+    this._name =name || "";
     this._tasks=[];
-    this._level=0;
+    this._level=level || 0;
     this._avalability=true;
   }
+
   set id(id){
   	this._id=id;
   }
