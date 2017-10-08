@@ -1,6 +1,6 @@
 var apiai = require('apiai');
-
-var app = apiai("30ce048ffe724964856e428d367ea748");
+var config = require('./config.js');
+var app = apiai(config.aitoken);
 
 module.exports.call = function(text){
 

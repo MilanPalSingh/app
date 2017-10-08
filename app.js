@@ -7,11 +7,13 @@ var Promise = require('promise');
 var http = require('http');
 var botID;
 
+var fire = require('./fire');
+var config = require('./config.js');
 
 // create a bot
 var bot = new SlackBot({
-    token: 'xoxb-252387996912-lr4RmhvmUqb9JHkf9A7f83t9',
-    name: 'calhack1'
+    token: config.slacktoken,
+    name: config.slackname
 });
 
 /**
@@ -20,13 +22,14 @@ var bot = new SlackBot({
 bot.on('message', function(data) {
     // all ingoing events https://api.slack.com/rtm
     if(data.text && !data.bot_id){
-        console.log(data.user, " : ", botID);
-        console.log(data.text);
+        // console.log(data.user, " : ", botID);
+        // console.log(data.text);
         appI.call(data.text).then(function(r){
-            console.log("resolved");
+            // console.log("resolved");
             var speech = r.result.fulfillment.speech;
-            console.log(speech);
-            console.log("user is ", data);
+            // console.log(speech);
+            console.log("user data ", data);
+            console.log("apiAi response ", r);
     
             bot.postMessage(data.channel, speech);             
             // res.send(r);
@@ -51,6 +54,11 @@ function getinfo(req,res,next){
     //     next();
     // });
 }
+
+// function getTasks(){
+//     var refUsers = fire.database().ref('tasks');
+
+// }
 
 
 var server = restify.createServer();
