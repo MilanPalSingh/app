@@ -58,6 +58,5 @@ typings/
 .env
 
 # config files 
-fire.js
 config.js
 
